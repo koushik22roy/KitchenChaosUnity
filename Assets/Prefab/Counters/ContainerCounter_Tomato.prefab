@@ -65,7 +65,19 @@ PrefabInstance:
     - target: {fileID: 2818010740890061324, guid: 0ee43eea25134b74bb6d079ade8cd530,
         type: 3}
       propertyPath: m_Name
-      value: ContainerCounter
+      value: ContainerCounter_Tomato
       objectReference: {fileID: 0}
+    - target: {fileID: 3429230068783496106, guid: 0ee43eea25134b74bb6d079ade8cd530,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 91e8fe3de9249fc44b7bdd8050062896,
+        type: 3}
+    - target: {fileID: 6363506016455535783, guid: 0ee43eea25134b74bb6d079ade8cd530,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 91e8fe3de9249fc44b7bdd8050062896,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0ee43eea25134b74bb6d079ade8cd530, type: 3}
