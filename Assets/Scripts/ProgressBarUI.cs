@@ -8,16 +8,24 @@ using UnityEngine.UI;
 public class ProgressBarUI : MonoBehaviour
 {
     [SerializeField] private Image barImage;
-    [SerializeField] private CuttingCounter cuttingCounter;
+    [SerializeField] private GameObject hasProgressGameObject;
+
+    private IHasProgress hasProgress;
 
     private void Start()
     {
-        cuttingCounter.OnProgressChanged += CuttingCounter_OnProgressChnaged;
+        hasProgress = hasProgressGameObject.GetComponent<IHasProgress>();
+        if(hasProgress == null)
+        {
+            Debug.LogError("GameObject " + hasProgressGameObject + " does not have a component that implement interface IHasProgress");
+        }
+
+        hasProgress.OnProgressChanged += HasProgress_OnProgressChnaged;
         barImage.fillAmount = 0f;
         Hide();
     }
 
-    private void CuttingCounter_OnProgressChnaged(CuttingCounter.OnProgressChangedEvent obj)
+    private void HasProgress_OnProgressChnaged(IHasProgress.OnProgressChangedEvent obj)
     {
         barImage.fillAmount = obj.progressNormalized;
 
