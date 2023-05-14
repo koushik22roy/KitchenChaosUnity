@@ -37,7 +37,7 @@ public class PlateKitchenObject : KitchenObject
         return true;
     }
 
-    public List<KitchenObjectScriptableObject> GetKitchenObjectScriptableObjects()
+    public List<KitchenObjectScriptableObject> GetKitchenObjectSOList()
     {
         return kitchenObjectSOList;
     }
