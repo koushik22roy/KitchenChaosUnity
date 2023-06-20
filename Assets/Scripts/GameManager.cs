@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
     }
 
     private STATE state;
-    private float waitingToStartTimer = 1f;
+    //private float waitingToStartTimer = 1f;
     private float countdownToStartTimer = 3f;
     private float gamePlayTimer;
     private float gamePlayTimerMax = 10f;
@@ -37,6 +37,16 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         GameInput.Instance.OnPauseAction += GameInput_OnPauseAction;
+        GameInput.Instance.OnInteractAction += GameInput_OnInteractAction;
+    }
+
+    private void GameInput_OnInteractAction()
+    {
+        if(state == STATE.WAITINGTOSTART)
+        {
+            state = STATE.COUNTDOWNTOSTART;
+            OnStateChanged?.Invoke();
+        }
     }
 
     private void GameInput_OnPauseAction()
@@ -49,12 +59,12 @@ public class GameManager : MonoBehaviour
         switch (state)
         {
             case STATE.WAITINGTOSTART:
-                waitingToStartTimer -= Time.deltaTime;
-                if(waitingToStartTimer < 0f)
-                {
-                    state = STATE.COUNTDOWNTOSTART;
-                    OnStateChanged?.Invoke();
-                }
+                //waitingToStartTimer -= Time.deltaTime;
+                //if(waitingToStartTimer < 0f)
+                //{
+                //    state = STATE.COUNTDOWNTOSTART;
+                //    OnStateChanged?.Invoke();
+                //}
                 break;
             case STATE.COUNTDOWNTOSTART:
                 countdownToStartTimer -= Time.deltaTime;
