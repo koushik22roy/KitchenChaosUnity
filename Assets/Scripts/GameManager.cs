@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     //private float waitingToStartTimer = 1f;
     private float countdownToStartTimer = 3f;
     private float gamePlayTimer;
-    private float gamePlayTimerMax = 10f;
+    [SerializeField] private float gamePlayTimerMax = 60f;
     private bool isGamePaused = false;
 
 
