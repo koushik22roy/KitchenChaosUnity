@@ -177,6 +177,17 @@ public partial class @PlayerInputAction : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""e82e35ba-31f8-4f7a-b456-5d441de94eeb"",
+                    ""path"": ""<AndroidJoystick>/stick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ActionMove"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""8c2a47ba-b8cb-4b38-a9db-583fafde22f4"",
                     ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",

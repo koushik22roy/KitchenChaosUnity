@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Lean.Gui;
 
 public class Player : MonoBehaviour,IKitchenObjectParent
 {
@@ -36,7 +37,7 @@ public class Player : MonoBehaviour,IKitchenObjectParent
         gameInput.OnInteractAction += GameInput_OnInteractAction;
         gameInput.OnInteractAlternateAction += GameInput_OnInteractAlternateAction;
     }
-
+    //cut interact
     private void GameInput_OnInteractAlternateAction()
     {
         if (!GameManager.Instance.IsGamePlaying()) return;
@@ -58,6 +59,17 @@ public class Player : MonoBehaviour,IKitchenObjectParent
         }
     }
 
+    //cut interact public 
+    public void Input_ItemsCut()
+    {
+        GameInput_OnInteractAlternateAction();
+    }
+
+    public void Input_ItemInteract()
+    {
+        GameInput_OnInteractAction();
+    }
+
     private void Update()
     {
         HandleMovement();
@@ -67,7 +79,6 @@ public class Player : MonoBehaviour,IKitchenObjectParent
     private void HandleMovement()
     {
         Vector2 inputVector = gameInput.GetMovementVectorNormalized();
-
         Vector3 moveDir = new Vector3(inputVector.x, 0f, inputVector.y);
 
         float moveDistance = moveSpeed * Time.deltaTime;

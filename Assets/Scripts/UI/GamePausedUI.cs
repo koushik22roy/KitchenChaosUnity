@@ -1,6 +1,6 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+//using System;
+//using System.Collections;
+//using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +9,7 @@ public class GamePausedUI : MonoBehaviour
     [SerializeField] private Button resumeButton;
     [SerializeField] private Button mainMenuButton;
     [SerializeField] private Button optionsButton;
+    [SerializeField] private Button pauseButton;
 
     private void Awake()
     {
@@ -24,6 +25,10 @@ public class GamePausedUI : MonoBehaviour
         {
             Hide();
             GameOptionsUI.Instance.Show(Show);
+        });
+        pauseButton.onClick.AddListener(() =>
+        {
+            GameManager.Instance.TogglePauseGame();
         });
     }
 

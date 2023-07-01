@@ -174,19 +174,7 @@ MonoBehaviour:
       m_Calls: []
   OnCompletion:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2850071416245675011}
-        m_TargetAssemblyTypeName: GogoGaga.TME.LeantweenCustomAnimator, Assembly-CSharp
-        m_MethodName: PlayAnimation
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &5946646039271708676
 GameObject:
   m_ObjectHideFlags: 0
@@ -198,6 +186,7 @@ GameObject:
   - component: {fileID: 467104566779683664}
   - component: {fileID: 640878391393121440}
   - component: {fileID: 214501640407872567}
+  - component: {fileID: 5822496598284063185}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -263,6 +252,23 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5822496598284063185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5946646039271708676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2cf6a4604a9b1c488ead15354d556b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseScale: {x: 1, y: 1, z: 1}
+  size: 1
+  pulseInterval: 1
+  pulseSize: 1
+  damping: 5
 --- !u!1 &7618972806511347530
 GameObject:
   m_ObjectHideFlags: 0
