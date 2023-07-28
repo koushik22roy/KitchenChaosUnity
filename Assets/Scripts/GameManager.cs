@@ -37,7 +37,14 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         GameInput.Instance.OnPauseAction += GameInput_OnPauseAction;
-        GameInput.Instance.OnInteractAction += GameInput_OnInteractAction;
+        //GameInput.Instance.OnInteractAction += GameInput_OnInteractAction;
+        StartCoroutine(Tutorial_OnInteractAction());
+    }
+
+    private IEnumerator Tutorial_OnInteractAction()
+    {
+        yield return new WaitForSeconds(3f);
+        GameInput_OnInteractAction();
     }
 
     private void GameInput_OnInteractAction()
