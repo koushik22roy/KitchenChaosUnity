@@ -1,19 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System;
-using Lean.Gui;
+using Unity.Netcode;
 
-public class Player : MonoBehaviour,IKitchenObjectParent
+public class Player : NetworkBehaviour, IKitchenObjectParent
 {
-    public static Player Instance { get; private set; }
+
+    public static event Action OnAnyPlayerSpawned;
+    public static event Action<Player> OnAnyPickSomething;
+
+    public Action OnPickSomething;
+    public event Action<BaseCounter> OnSelectedCounterChanged;
+
+
+    public static void ResetStaticData()
+    {
+        OnAnyPlayerSpawned = null;
+    }
+
+    public static Player LocalInstance { get; private set; }
 
     //events
-    public event Action<BaseCounter> OnSelectedCounterChanged;
-    public Action OnPickSomething;
 
     [SerializeField] private float moveSpeed = 7f;
-    [SerializeField] private GameInput gameInput;
+    // [SerializeField] private GameInput gameInput;
     [SerializeField] private LayerMask counterLayerMask;
     [SerializeField] private Transform kitchenObjectHoldPoint;
 
@@ -23,20 +32,18 @@ public class Player : MonoBehaviour,IKitchenObjectParent
     private BaseCounter selectedCounter;
     private KitchenObject kitchenObject;
 
-    private void Awake()
-    {
-        if(Instance != null)
-        {
-            Debug.LogError("more than one player instance");
-        }
-        Instance = this;
-    }
-
     private void Start()
     {
-        gameInput.OnInteractAction += GameInput_OnInteractAction;
-        gameInput.OnInteractAlternateAction += GameInput_OnInteractAlternateAction;
+        GameInput.Instance.OnInteractAction += GameInput_OnInteractAction;
+        GameInput.Instance.OnInteractAlternateAction += GameInput_OnInteractAlternateAction;
     }
+
+    public override void OnNetworkSpawn()
+    {
+        if (IsOwner) { LocalInstance = this; }
+        OnAnyPlayerSpawned?.Invoke();
+    }
+
     //cut interact
     private void GameInput_OnInteractAlternateAction()
     {
@@ -72,13 +79,18 @@ public class Player : MonoBehaviour,IKitchenObjectParent
 
     private void Update()
     {
+        if (!IsOwner)
+        {
+            return;
+        }
+
         HandleMovement();
         HandleInteractions();
     }
 
     private void HandleMovement()
     {
-        Vector2 inputVector = gameInput.GetMovementVectorNormalized();
+        Vector2 inputVector = GameInput.Instance.GetMovementVectorNormalized();
         Vector3 moveDir = new Vector3(inputVector.x, 0f, inputVector.y);
 
         float moveDistance = moveSpeed * Time.deltaTime;
@@ -127,21 +139,21 @@ public class Player : MonoBehaviour,IKitchenObjectParent
 
     private void HandleInteractions()
     {
-        Vector2 inputVector = gameInput.GetMovementVectorNormalized();
+        Vector2 inputVector = GameInput.Instance.GetMovementVectorNormalized();
         Vector3 moveDir = new Vector3(inputVector.x, 0f, inputVector.y);
 
-        if(moveDir != Vector3.zero)
+        if (moveDir != Vector3.zero)
         {
             lastInteractor = moveDir;
         }
 
         float interactionDistance = 2f;
 
-        if (Physics.Raycast(transform.position, lastInteractor, out RaycastHit raycastHit, interactionDistance,counterLayerMask))
+        if (Physics.Raycast(transform.position, lastInteractor, out RaycastHit raycastHit, interactionDistance, counterLayerMask))
         {
             if (raycastHit.transform.TryGetComponent(out BaseCounter baseCounter))
             {
-                if(baseCounter != selectedCounter)
+                if (baseCounter != selectedCounter)
                 {
                     selectedCounter = baseCounter;
                     SetSelectedCounter(selectedCounter);
@@ -180,9 +192,10 @@ public class Player : MonoBehaviour,IKitchenObjectParent
     {
         this.kitchenObject = kitchenObject;
 
-        if(kitchenObject != null)
+        if (kitchenObject != null)
         {
-            OnPickSomething?.Invoke();
+            OnPickSomething?.Invoke(); 
+            OnAnyPickSomething?.Invoke(this);
         }
     }
 

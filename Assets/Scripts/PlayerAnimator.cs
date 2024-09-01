@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
-public class PlayerAnimator : MonoBehaviour
+public class PlayerAnimator : NetworkBehaviour
 {
     private const string IS_WALKING = "IsWalking";
 
@@ -15,6 +14,7 @@ public class PlayerAnimator : MonoBehaviour
 
     private void Update()
     {
-        animator.SetBool(IS_WALKING,player.IsWalking());
+        if (!IsOwner) { return; }
+        animator.SetBool(IS_WALKING, player.IsWalking());
     }
 }

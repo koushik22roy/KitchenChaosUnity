@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,12 +10,28 @@ public class SelectedCounterVisual : MonoBehaviour
 
     private void Start()
     {
-        Player.Instance.OnSelectedCounterChanged += Player_OnSelectedCounterChanged;
+        if (Player.LocalInstance != null)
+        {
+            Player.LocalInstance.OnSelectedCounterChanged += Player_OnSelectedCounterChanged;
+        }
+        else
+        {
+            Player.OnAnyPlayerSpawned += Player_OnAnyPlayerSpawned;
+        }
+    }
+
+    private void Player_OnAnyPlayerSpawned()
+    {
+        if (Player.LocalInstance != null)
+        {
+            Player.LocalInstance.OnSelectedCounterChanged -= Player_OnSelectedCounterChanged;
+            Player.LocalInstance.OnSelectedCounterChanged += Player_OnSelectedCounterChanged;
+        }
     }
 
     private void Player_OnSelectedCounterChanged(BaseCounter obj)
     {
-        if(obj == baseCounter)
+        if (obj == baseCounter)
         {
             Show();
         }
@@ -26,9 +43,9 @@ public class SelectedCounterVisual : MonoBehaviour
 
     private void Show()
     {
-        foreach(GameObject visualGameObject in visualGameObject)
+        foreach (GameObject visualGameObject in visualGameObject)
         {
-            visualGameObject.SetActive(true);  
+            visualGameObject.SetActive(true);
         }
     }
 

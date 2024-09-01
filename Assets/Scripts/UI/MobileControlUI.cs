@@ -11,12 +11,12 @@ public class MobileControlUI : MonoBehaviour
     {
         cutButton.onClick.AddListener(() =>
         {
-            Player.Instance.Input_ItemsCut();
+            // Player.Instance.Input_ItemsCut();
         });
 
         interactButton.onClick.AddListener(() =>
         {
-            Player.Instance.Input_ItemInteract();
+            // Player.Instance.Input_ItemInteract();
         });
     }
 }

@@ -19,9 +19,9 @@ public class GameManager : MonoBehaviour
         GAMEOVER,
     }
 
-    private STATE state;
-    //private float waitingToStartTimer = 1f;
-    private float countdownToStartTimer = 3f;
+    [SerializeField] private STATE state;
+    private float waitingToStartTimer = 1f;
+    private float countdownToStartTimer = 1f;
     private float gamePlayTimer;
     [SerializeField] private float gamePlayTimerMax = 60f;
     private bool isGamePaused = false;
@@ -37,8 +37,12 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         GameInput.Instance.OnPauseAction += GameInput_OnPauseAction;
-        //GameInput.Instance.OnInteractAction += GameInput_OnInteractAction;
-        StartCoroutine(Tutorial_OnInteractAction());
+        GameInput.Instance.OnInteractAction += GameInput_OnInteractAction;
+        // StartCoroutine(Tutorial_OnInteractAction());
+
+        //debug trigger game start automatically
+        state = STATE.COUNTDOWNTOSTART;
+        OnStateChanged?.Invoke();
     }
 
     private IEnumerator Tutorial_OnInteractAction()
@@ -49,7 +53,7 @@ public class GameManager : MonoBehaviour
 
     private void GameInput_OnInteractAction()
     {
-        if(state == STATE.WAITINGTOSTART)
+        if (state == STATE.WAITINGTOSTART)
         {
             state = STATE.COUNTDOWNTOSTART;
             OnStateChanged?.Invoke();
@@ -66,12 +70,12 @@ public class GameManager : MonoBehaviour
         switch (state)
         {
             case STATE.WAITINGTOSTART:
-                //waitingToStartTimer -= Time.deltaTime;
-                //if(waitingToStartTimer < 0f)
-                //{
+                // waitingToStartTimer -= Time.deltaTime;
+                // if(waitingToStartTimer < 0f)
+                // {
                 //    state = STATE.COUNTDOWNTOSTART;
                 //    OnStateChanged?.Invoke();
-                //}
+                // }
                 break;
             case STATE.COUNTDOWNTOSTART:
                 countdownToStartTimer -= Time.deltaTime;
